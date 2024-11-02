@@ -16,6 +16,8 @@ const cookie_parser_1 = __importDefault(require('cookie-parser'));
 const compression_1 = __importDefault(require('compression'));
 const cors_1 = __importDefault(require('cors'));
 const express_fileupload_1 = __importDefault(require('express-fileupload'));
+// Configs import
+const logger_config_1 = __importDefault(require('./configs/logger.config'));
 // Create express app
 const app = (0, express_1.default)();
 // Load env variables
@@ -47,5 +49,5 @@ app.post('/', (req, res) => {
 });
 // Start the dev server
 app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+    logger_config_1.default.info(`Server listening on port ${PORT}`);
 });
