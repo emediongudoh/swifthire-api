@@ -14,14 +14,26 @@
     "license": "ISC",
     "description": "",
     "devDependencies": {
+        "@types/compression": "^1.7.5",
+        "@types/cookie-parser": "^1.4.7",
+        "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
+        "@types/express-fileupload": "^1.5.1",
+        "@types/morgan": "^1.9.9",
         "cross-env": "^7.0.3",
         "nodemon": "^3.1.7",
         "prettier": "^3.3.3",
         "ts-node": "^10.9.2"
     },
     "dependencies": {
+        "compression": "^1.7.5",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
         "dotenv": "^16.4.5",
-        "express": "^4.21.1"
+        "express": "^4.21.1",
+        "express-fileupload": "^1.5.1",
+        "express-mongo-sanitize": "^2.2.0",
+        "helmet": "^8.0.0",
+        "morgan": "^1.10.0"
     }
 }
