@@ -1,5 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, CallbackError } from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcryptjs';
 
 // Define user roles
 export enum UserRole {
@@ -63,6 +64,20 @@ const userSchema: Schema<IUser> = new Schema(
     },
     { collection: 'users', timestamps: true }
 );
+
+// Hash password on presave using `bcryptjs`
+userSchema.pre('save', async function (next) {
+    try {
+        if (this.isNew) {
+            const salt = await bcrypt.genSalt(12);
+            const hashedPassword = await bcrypt.hash(this.password, salt);
+            this.password = hashedPassword;
+        }
+        next();
+    } catch (error) {
+        next(error as CallbackError);
+    }
+});
 
 const User = mongoose.model<IUser>('User', userSchema);
 

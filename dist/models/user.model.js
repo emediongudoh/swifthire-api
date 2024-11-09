@@ -60,6 +60,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 exports.UserRole = void 0;
 const mongoose_1 = __importStar(require('mongoose'));
 const validator_1 = __importDefault(require('validator'));
+const bcryptjs_1 = __importDefault(require('bcryptjs'));
 // Define user roles
 var UserRole;
 (function (UserRole) {
@@ -114,5 +115,21 @@ const userSchema = new mongoose_1.Schema(
     },
     { collection: 'users', timestamps: true }
 );
+// Hash password on presave using `bcryptjs`
+userSchema.pre('save', async function (next) {
+    try {
+        if (this.isNew) {
+            const salt = await bcryptjs_1.default.genSalt(12);
+            const hashedPassword = await bcryptjs_1.default.hash(
+                this.password,
+                salt
+            );
+            this.password = hashedPassword;
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
 const User = mongoose_1.default.model('User', userSchema);
 exports.default = User;
