@@ -62,6 +62,8 @@ const validator_1 = __importDefault(require('validator'));
 const http_errors_1 = __importDefault(require('http-errors'));
 // Models import
 const user_model_1 = __importStar(require('../models/user.model'));
+// Utils import
+const token_util_1 = require('../utils/token.util');
 // Register
 const register = async (req, res, next) => {
     try {
@@ -111,12 +113,18 @@ const register = async (req, res, next) => {
             password,
             role,
         });
+        // Generate JWT
+        const token = (0, token_util_1.generateToken)(
+            { _id: user._id.toString() },
+            '7d'
+        );
         // Return the newly registered user
         res.status(201).json({
             _id: user._id.toString(),
             fullname: user.fullname,
             email: user.email,
             role: user.role,
+            token,
         });
     } catch (error) {
         next(error);

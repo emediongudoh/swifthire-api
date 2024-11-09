@@ -5,6 +5,9 @@ import createHttpError from 'http-errors';
 // Models import
 import User, { IUser, UserRole } from '../models/user.model';
 
+// Utils import
+import { generateToken } from '../utils/token.util';
+
 // Register
 export const register = async (
     req: Request,
@@ -64,12 +67,16 @@ export const register = async (
             role,
         });
 
+        // Generate JWT
+        const token = generateToken({ _id: user._id.toString() }, '7d');
+
         // Return the newly registered user
         res.status(201).json({
             _id: user._id.toString(),
             fullname: user.fullname,
             email: user.email,
             role: user.role,
+            token,
         });
     } catch (error) {
         next(error);
