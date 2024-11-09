@@ -57,7 +57,7 @@ var __importDefault =
         return mod && mod.__esModule ? mod : { default: mod };
     };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.login = exports.register = void 0;
+exports.checkEmail = exports.login = exports.register = void 0;
 const validator_1 = __importDefault(require('validator'));
 const http_errors_1 = __importDefault(require('http-errors'));
 const bcryptjs_1 = __importDefault(require('bcryptjs'));
@@ -171,3 +171,20 @@ const login = async (req, res, next) => {
     }
 };
 exports.login = login;
+// Check email availability to prevent duplicates
+const checkEmail = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        // Check if email is already in use
+        const emailExist = await user_model_1.default.findOne({ email });
+        if (emailExist) {
+            res.status(409).json({ message: 'Email address already in use' });
+        } else {
+            // Return a success response
+            res.status(200).json({ message: 'Email is available' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+exports.checkEmail = checkEmail;

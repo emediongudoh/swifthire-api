@@ -4,8 +4,8 @@ import bcrypt from 'bcryptjs';
 
 // Define user roles
 export enum UserRole {
-    SERVICE_PROVIDER = 'SERVICE_PROVIDER',
-    CUSTOMER = 'CUSTOMER',
+    PROVIDER = 'Provider',
+    SEEKER = 'Seeker',
 }
 
 export interface IUser extends Document {
@@ -59,7 +59,7 @@ const userSchema: Schema<IUser> = new Schema(
         role: {
             type: String,
             enum: Object.values(UserRole),
-            default: UserRole.CUSTOMER,
+            default: UserRole.SEEKER,
         },
     },
     { collection: 'users', timestamps: true }

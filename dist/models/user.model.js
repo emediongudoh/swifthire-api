@@ -64,8 +64,8 @@ const bcryptjs_1 = __importDefault(require('bcryptjs'));
 // Define user roles
 var UserRole;
 (function (UserRole) {
-    UserRole['SERVICE_PROVIDER'] = 'SERVICE_PROVIDER';
-    UserRole['CUSTOMER'] = 'CUSTOMER';
+    UserRole['PROVIDER'] = 'Provider';
+    UserRole['SEEKER'] = 'Seeker';
 })(UserRole || (exports.UserRole = UserRole = {}));
 const userSchema = new mongoose_1.Schema(
     {
@@ -110,7 +110,7 @@ const userSchema = new mongoose_1.Schema(
         role: {
             type: String,
             enum: Object.values(UserRole),
-            default: UserRole.CUSTOMER,
+            default: UserRole.SEEKER,
         },
     },
     { collection: 'users', timestamps: true }

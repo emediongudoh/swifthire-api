@@ -122,3 +122,25 @@ export const login = async (
         next(error);
     }
 };
+
+// Check email availability to prevent duplicates
+export const checkEmail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { email } = req.body;
+
+        // Check if email is already in use
+        const emailExist = await User.findOne({ email });
+        if (emailExist) {
+            res.status(409).json({ message: 'Email address already in use' });
+        } else {
+            // Return a success response
+            res.status(200).json({ message: 'Email is available' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
