@@ -20,6 +20,8 @@ const http_errors_1 = __importDefault(require('http-errors'));
 const mongoose_1 = __importDefault(require('mongoose'));
 // Configs import
 const logger_config_1 = __importDefault(require('./configs/logger.config'));
+// Routes import
+const user_route_1 = __importDefault(require('./routes/user.route'));
 // Create express app
 const app = (0, express_1.default)();
 // Load env variables
@@ -61,10 +63,8 @@ app.use((0, compression_1.default)());
 app.use((0, cors_1.default)());
 // Simple express file upload middleware that wraps around `Busboy`
 app.use((0, express_fileupload_1.default)({ useTempFiles: true }));
-// Test route
-app.post('/', (req, res) => {
-    res.send(req.body);
-});
+// Routing
+app.use('/api/v1/users', user_route_1.default);
 // Start the dev server
 let server = app.listen(PORT, () => {
     logger_config_1.default.info(`Server listening on port ${PORT}`);

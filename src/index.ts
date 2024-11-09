@@ -13,6 +13,9 @@ import mongoose from 'mongoose';
 // Configs import
 import logger from './configs/logger.config';
 
+// Routes import
+import userRoute from './routes/user.route';
+
 // Create express app
 const app = express();
 
@@ -64,10 +67,8 @@ app.use(cors());
 // Simple express file upload middleware that wraps around `Busboy`
 app.use(fileUpload({ useTempFiles: true }));
 
-// Test route
-app.post('/', (req: Request, res: Response) => {
-    res.send(req.body);
-});
+// Routing
+app.use('/api/v1/users', userRoute);
 
 // Start the dev server
 let server = app.listen(PORT, () => {
